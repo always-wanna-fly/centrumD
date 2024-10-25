@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Admin Dashboard
-Description: Плагін для створення і керування полями на сторінці налаштувань.
+Description: A plugin for creating and managing fields on the settings page.
 Version: 1.1
 */
 
@@ -36,10 +36,10 @@ class AdminDashboard {
             <table class="wp-list-table widefat fixed striped" id="fields-table">
                 <thead>
                 <tr>
-                    <th>Назва</th>
-                    <th>Значення</th>
-                    <th>Тип</th>
-                    <th>Дії</th>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Type</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="sortable">
@@ -57,32 +57,32 @@ class AdminDashboard {
                         <td>
                             <span class="field-type"><?php echo esc_html($field['type']); ?></span>
                             <select class="edit-type" style="display: none;">
-                                <option value="text" <?php selected($field['type'], 'text'); ?>>Текст</option>
-                                <option value="phone" <?php selected($field['type'], 'phone'); ?>>Номер телефону</option>
+                                <option value="text" <?php selected($field['type'], 'text'); ?>>Text</option>
+                                <option value="phone" <?php selected($field['type'], 'phone'); ?>>Phone Number</option>
                                 <option value="email" <?php selected($field['type'], 'email'); ?>>Email</option>
-                                <option value="work_hours" <?php selected($field['type'], 'work_hours'); ?>>Робочі години</option>
+                                <option value="work_hours" <?php selected($field['type'], 'work_hours'); ?>>Working Hours</option>
                             </select>
                         </td>
                         <td>
-                            <a href="#" class="button edit-field">Редагувати</a>
-                            <a href="#" class="button button-primary save-field" style="display: none;">Зберегти</a>
-                            <a href="#" class="button button-danger delete-field" data-index="<?php echo $index; ?>">Видалити</a>
+                            <a href="#" class="button edit-field">Edit</a>
+                            <a href="#" class="button button-primary save-field" style="display: none;">Save</a>
+                            <a href="#" class="button button-danger delete-field" data-index="<?php echo $index; ?>">Delete</a>
                         </td>
                     </tr>
 				<?php endforeach; ?>
                 </tbody>
             </table>
-            <h2>Додати нове поле</h2>
+            <h2>Add New Field</h2>
             <form id="add-field-form">
                 <select id="new-field-type">
-                    <option value="text">Текст</option>
-                    <option value="phone">Номер телефону</option>
+                    <option value="text">Text</option>
+                    <option value="phone">Phone Number</option>
                     <option value="email">Email</option>
-                    <option value="work_hours">Робочі години</option>
+                    <option value="work_hours">Working Hours</option>
                 </select>
-                <input type="text" id="new-field-name" placeholder="Назва" required>
-                <input type="text" id="new-field-value" placeholder="Значення" required>
-                <button type="submit" class="button button-primary">Додати</button>
+                <input type="text" id="new-field-name" placeholder="Name" required>
+                <input type="text" id="new-field-value" placeholder="Value" required>
+                <button type="submit" class="button button-primary">Add</button>
             </form>
         </div>
 		<?php
@@ -94,7 +94,7 @@ class AdminDashboard {
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('admin-dashboard-script', plugins_url('src/admin-dashboard.js', __FILE__), ['jquery', 'jquery-ui-sortable'], null, true);
 		wp_enqueue_style('admin-dashboard-style', plugins_url('src/admin-dashboard.css', __FILE__));
-		wp_enqueue_script( 'inputmask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js');
+		wp_enqueue_script('inputmask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js');
 		wp_localize_script('admin-dashboard-script', 'adminDashboard', ['ajaxUrl' => admin_url('admin-ajax.php')]);
 	}
 
@@ -104,21 +104,20 @@ class AdminDashboard {
 		$fields = get_option($this->option_name, []);
 		$index = isset($_POST['index']) ? intval($_POST['index']) : null;
 
-		// Перевірка, чи додати нове поле або оновити існуюче
+		// Check whether to add a new field or update an existing one
 		if ($index !== null && array_key_exists($index, $fields)) {
-			// Оновлення існуючого поля
+			// Updating an existing field
 			$fields[$index] = [
 				'name' => sanitize_text_field($_POST['name']),
 				'value' => sanitize_text_field($_POST['value']),
 				'type' => sanitize_text_field($_POST['type'])
 			];
 		} else {
-			// Додавання нового поля
+			// Adding a new field
 			$fields[] = [
 				'name' => sanitize_text_field($_POST['name']),
 				'value' => sanitize_text_field($_POST['value']),
 				'type' => sanitize_text_field($_POST['type'])
-
 			];
 		}
 
@@ -132,16 +131,17 @@ class AdminDashboard {
 		$fields = get_option($this->option_name, []);
 		$index = intval($_POST['index']);
 		unset($fields[$index]);
-		update_option($this->option_name, array_values($fields)); // Перезаписуємо індекси
+		update_option($this->option_name, array_values($fields)); // Re-indexing
 		wp_send_json_success();
 	}
+
 	public function update_order() {
 		if (!current_user_can('manage_options')) wp_send_json_error();
 
 		$order = isset($_POST['order']) ? $_POST['order'] : [];
 		$fields = get_option($this->option_name, []);
 
-		// Пер reorder полів на основі нової послідовності
+		// Reordering fields based on the new sequence
 		$sorted_fields = [];
 		foreach ($order as $index) {
 			if (isset($fields[$index])) {

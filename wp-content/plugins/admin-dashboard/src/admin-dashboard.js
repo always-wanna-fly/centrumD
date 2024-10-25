@@ -1,13 +1,13 @@
 jQuery(document).ready(function ($) {
-    // Додаємо функцію для встановлення маски
+    // Add function to set mask
     function updateMask() {
         const type = $('#new-field-type').val();
         const $valueField = $('#new-field-value');
 
-        // Спочатку знімаємо всі попередні маски
+        // First, remove all previous masks
         $valueField.inputmask('remove');
 
-        // Встановлюємо маску залежно від типу
+        // Set mask depending on type
         if (type === 'phone') {
             $valueField.inputmask({
                 mask: "+380 (99) 999-99-99",
@@ -30,14 +30,15 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    // call the updateMask() function when changing the type
+    // Call the updateMask() function when changing the type
     $('#new-field-type').on('change', function () {
         updateMask();
     });
 
-    // call updateMask() when loading the page for the initial mask
+    // Call updateMask() when loading the page for the initial mask
     updateMask();
-    // validation email and phone
+
+    // Validation email and phone
     function validateEmail(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
@@ -47,38 +48,39 @@ jQuery(document).ready(function ($) {
         const regex = /^\+380 \(\d{2}\) \d{3}-\d{2}-\d{2}$/;
         return regex.test(phone);
     }
+
     function validateWorkHours(hours) {
         const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9] - (0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
         return regex.test(hours);
     }
 
-    // Повідомлення про помилку
+    // Error message
     function showAlert(message) {
         alert(message);
     }
 
-    // Додавання нового поля
+    // Adding a new field
     $('#add-field-form').on('submit', function (e) {
         e.preventDefault();
         const name = $('#new-field-name').val().trim();
         const value = $('#new-field-value').val().trim();
         const type = $('#new-field-type').val();
 
-        // Валідація значень
+        // Validate values
         if (!name || !value) {
-            showAlert("Заповніть всі поля.");
+            showAlert("Please fill in all fields.");
             return;
         }
         if (type === 'email' && !validateEmail(value)) {
-            showAlert("Введіть дійсну email адресу.");
+            showAlert("Please enter a valid email address.");
             return;
         }
         if (type === 'phone' && !validatePhone(value)) {
-            showAlert("Введіть дійсний номер телефону.");
+            showAlert("Please enter a valid phone number.");
             return;
         }
         if (type === 'work_hours' && !validateWorkHours(value)) {
-            showAlert("Введіть дійсний формат робочих годин (HH:MM - HH:MM).");
+            showAlert("Please enter a valid work hours format (HH:MM - HH:MM).");
             return;
         }
 
@@ -86,11 +88,11 @@ jQuery(document).ready(function ($) {
         $.post(adminDashboard.ajaxUrl, fields).done(function () {
             location.reload();
         }).fail(function () {
-            showAlert("Помилка додавання поля.");
+            showAlert("Error adding field.");
         });
     });
 
-    // Редагування поля
+    // Editing a field
     $('.edit-field').on('click', function (e) {
         e.preventDefault();
         const row = $(this).closest('tr');
@@ -99,7 +101,7 @@ jQuery(document).ready(function ($) {
         $(this).hide();
     });
 
-    // Збереження змін
+    // Saving changes
     $('.save-field').on('click', function (e) {
         e.preventDefault();
         const row = $(this).closest('tr');
@@ -108,17 +110,17 @@ jQuery(document).ready(function ($) {
         const value = row.find('.edit-value').val().trim();
         const type = row.find('.edit-type').val();
 
-        // Валідація значень
+        // Validate values
         if (!name || !value) {
-            showAlert("Заповніть всі поля.");
+            showAlert("Please fill in all fields.");
             return;
         }
         if (type === 'email' && !validateEmail(value)) {
-            showAlert("Введіть дійсну email адресу.");
+            showAlert("Please enter a valid email address.");
             return;
         }
         if (type === 'phone' && !validatePhone(value)) {
-            showAlert("Введіть дійсний номер телефону.");
+            showAlert("Please enter a valid phone number.");
             return;
         }
 
@@ -127,11 +129,11 @@ jQuery(document).ready(function ($) {
         }).done(function () {
             location.reload();
         }).fail(function () {
-            showAlert("Помилка збереження змін.");
+            showAlert("Error saving changes.");
         });
     });
 
-    // Видалення поля
+    // Deleting a field
     $('.delete-field').on('click', function (e) {
         e.preventDefault();
         const index = $(this).data('index');
@@ -140,11 +142,11 @@ jQuery(document).ready(function ($) {
                 location.reload();
             })
             .fail(function () {
-                showAlert("Помилка видалення поля.");
+                showAlert("Error deleting field.");
             });
     });
 
-    // Сортування полів
+    // Sorting fields
     $('#sortable').sortable({
         handle: '.handle',
         update: function () {
@@ -154,7 +156,7 @@ jQuery(document).ready(function ($) {
                     location.reload();
                 })
                 .fail(function () {
-                    showAlert("Помилка сортування полів.");
+                    showAlert("Error sorting fields.");
                 });
         }
     });
