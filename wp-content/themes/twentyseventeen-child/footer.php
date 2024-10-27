@@ -4,7 +4,7 @@
 	<div class="wrap">
 		<div>
 			<?php
-			$fields = get_option('admin_dashboard_fields', []);
+			$fields = get_option('theme_options_manager_fields', []);
 
 			if (!empty($fields)) {
 				echo '<div class="custom-fields">';
