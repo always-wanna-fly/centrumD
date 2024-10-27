@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Admin Dashboard
+Plugin Name: Theme Options Manager
 Description: A plugin for creating and managing fields on the settings page.
 Version: 1.1
 */
@@ -8,7 +8,7 @@ Version: 1.1
 if (!defined('ABSPATH')) exit;
 
 class AdminDashboard {
-	private $option_name = 'admin_dashboard_fields';
+	private $option_name = 'theme_options_manager_fields';
 
 	public function __construct() {
 		add_action('admin_menu', [$this, 'create_settings_page']);
@@ -20,8 +20,8 @@ class AdminDashboard {
 
 	public function create_settings_page() {
 		add_options_page(
-			'Admin Dashboard',
-			'Admin Dashboard',
+			__('Theme Options Manager', 'theme-options-manager'),
+			__('Theme Options Manager', 'theme-options-manager'),
 			'manage_options',
 			'admin-dashboard',
 			[$this, 'render_settings_page']
@@ -32,14 +32,14 @@ class AdminDashboard {
 		$fields = get_option($this->option_name, []);
 		?>
         <div class="wrap">
-            <h1>Admin Dashboard Settings</h1>
+            <h1><?php _e('Theme Options Manager Settings', 'theme-options-manager'); ?></h1>
             <table class="wp-list-table widefat fixed striped" id="fields-table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                    <th>Type</th>
-                    <th>Actions</th>
+                    <th><?php _e('Name', 'theme-options-manager'); ?></th>
+                    <th><?php _e('Value', 'theme-options-manager'); ?></th>
+                    <th><?php _e('Type', 'theme-options-manager'); ?></th>
+                    <th><?php _e('Actions', 'theme-options-manager'); ?></th>
                 </tr>
                 </thead>
                 <tbody id="sortable">
@@ -57,32 +57,32 @@ class AdminDashboard {
                         <td>
                             <span class="field-type"><?php echo esc_html($field['type']); ?></span>
                             <select class="edit-type" style="display: none;">
-                                <option value="text" <?php selected($field['type'], 'text'); ?>>Text</option>
-                                <option value="phone" <?php selected($field['type'], 'phone'); ?>>Phone Number</option>
-                                <option value="email" <?php selected($field['type'], 'email'); ?>>Email</option>
-                                <option value="work_hours" <?php selected($field['type'], 'work_hours'); ?>>Working Hours</option>
+                                <option value="text" <?php selected($field['type'], 'text'); ?>><?php _e('Text', 'theme-options-manager'); ?></option>
+                                <option value="phone" <?php selected($field['type'], 'phone'); ?>><?php _e('Phone Number', 'theme-options-manager'); ?></option>
+                                <option value="email" <?php selected($field['type'], 'email'); ?>><?php _e('Email', 'theme-options-manager'); ?></option>
+                                <option value="work_hours" <?php selected($field['type'], 'work_hours'); ?>><?php _e('Working Hours', 'theme-options-manager'); ?></option>
                             </select>
                         </td>
                         <td>
-                            <a href="#" class="button edit-field">Edit</a>
-                            <a href="#" class="button button-primary save-field" style="display: none;">Save</a>
-                            <a href="#" class="button button-danger delete-field" data-index="<?php echo $index; ?>">Delete</a>
+                            <a href="#" class="button edit-field"><?php _e('Edit', 'theme-options-manager'); ?></a>
+                            <a href="#" class="button button-primary save-field" style="display: none;"><?php _e('Save', 'theme-options-manager'); ?></a>
+                            <a href="#" class="button button-danger delete-field" data-index="<?php echo $index; ?>"><?php _e('Delete', 'theme-options-manager'); ?></a>
                         </td>
                     </tr>
 				<?php endforeach; ?>
                 </tbody>
             </table>
-            <h2>Add New Field</h2>
+            <h2><?php _e('Add New Field', 'theme-options-manager'); ?></h2>
             <form id="add-field-form">
                 <select id="new-field-type">
-                    <option value="text">Text</option>
-                    <option value="phone">Phone Number</option>
-                    <option value="email">Email</option>
-                    <option value="work_hours">Working Hours</option>
+                    <option value="text"><?php _e('Text', 'theme-options-manager'); ?></option>
+                    <option value="phone"><?php _e('Phone Number', 'theme-options-manager'); ?></option>
+                    <option value="email"><?php _e('Email', 'theme-options-manager'); ?></option>
+                    <option value="work_hours"><?php _e('Working Hours', 'theme-options-manager'); ?></option>
                 </select>
-                <input type="text" id="new-field-name" placeholder="Name" required>
-                <input type="text" id="new-field-value" placeholder="Value" required>
-                <button type="submit" class="button button-primary">Add</button>
+                <input type="text" id="new-field-name" placeholder="<?php _e('Name', 'theme-options-manager'); ?>" required>
+                <input type="text" id="new-field-value" placeholder="<?php _e('Value', 'theme-options-manager'); ?>" required>
+                <button type="submit" class="button button-primary"><?php _e('Add', 'theme-options-manager'); ?></button>
             </form>
         </div>
 		<?php
