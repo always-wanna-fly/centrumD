@@ -33,7 +33,7 @@ if (!empty($fields)) {
     echo '<div class="custom-fields">';
     foreach ($fields as $field) {
         echo '<div class="field">';
-        echo '<strong>' . esc_html($field['name']) . ':</strong> ';
+        echo '<strong>' . esc_html($field['name']) . ($field['name'] ? ':' : '') . '</strong> ';
         echo esc_html($field['value']);
         echo '</div>';
     }
