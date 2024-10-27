@@ -84,7 +84,7 @@ jQuery(document).ready(function ($) {
             return;
         }
 
-        const fields = { action: 'theme_options_manager_update_field', name, value, type };
+        const fields = {action: 'theme_options_manager_update_field', name, value, type};
         $.post(themeOptionsManager.ajaxUrl, fields).done(function () {
             location.reload();
         }).fail(function () {
@@ -137,7 +137,7 @@ jQuery(document).ready(function ($) {
     $('.delete-field').on('click', function (e) {
         e.preventDefault();
         const index = $(this).data('index');
-        $.post(themeOptionsManager.ajaxUrl, { action: 'theme_options_manager_delete_field', index })
+        $.post(themeOptionsManager.ajaxUrl, {action: 'theme_options_manager_delete_field', index})
             .done(function () {
                 location.reload();
             })
@@ -150,8 +150,8 @@ jQuery(document).ready(function ($) {
     $('#sortable').sortable({
         handle: '.handle',
         update: function () {
-            const newOrder = $(this).sortable('toArray', { attribute: 'data-index' });
-            $.post(themeOptionsManager.ajaxUrl, { action: 'theme_options_manager_update_order', order: newOrder })
+            const newOrder = $(this).sortable('toArray', {attribute: 'data-index'});
+            $.post(themeOptionsManager.ajaxUrl, {action: 'theme_options_manager_update_order', order: newOrder})
                 .done(function () {
                     location.reload();
                 })
