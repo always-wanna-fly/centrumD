@@ -67,8 +67,8 @@ jQuery(document).ready(function ($) {
         const type = $('#new-field-type').val();
 
         // Validate values
-        if (!name || !value) {
-            showAlert("Please fill in all fields.");
+        if (!value) {
+            showAlert("Please fill in the field value.");
             return;
         }
         if (type === 'email' && !validateEmail(value)) {
