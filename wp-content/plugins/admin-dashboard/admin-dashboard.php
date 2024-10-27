@@ -92,8 +92,8 @@ class AdminDashboard {
 		if ($hook !== 'settings_page_admin-dashboard') return;
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('admin-dashboard-script', plugins_url('src/admin-dashboard.js', __FILE__), ['jquery', 'jquery-ui-sortable'], null, true);
-		wp_enqueue_style('admin-dashboard-style', plugins_url('src/admin-dashboard.css', __FILE__));
+		wp_enqueue_script('admin-dashboard-script', plugins_url('assets/admin-dashboard.js', __FILE__), ['jquery', 'jquery-ui-sortable'], null, true);
+		wp_enqueue_style('admin-dashboard-style', plugins_url('assets/admin-dashboard.css', __FILE__));
 		wp_enqueue_script('inputmask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js');
 		wp_localize_script('admin-dashboard-script', 'adminDashboard', ['ajaxUrl' => admin_url('admin-ajax.php')]);
 	}
