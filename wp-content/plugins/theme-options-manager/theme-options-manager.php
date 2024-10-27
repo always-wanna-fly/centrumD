@@ -7,15 +7,15 @@ Version: 1.1
 
 if (!defined('ABSPATH')) exit;
 
-class AdminDashboard {
+class ThemeOptionsManager {
 	private $option_name = 'theme_options_manager_fields';
 
 	public function __construct() {
 		add_action('admin_menu', [$this, 'create_settings_page']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-		add_action('wp_ajax_admin_dashboard_update_field', [$this, 'update_field']);
-		add_action('wp_ajax_admin_dashboard_delete_field', [$this, 'delete_field']);
-		add_action('wp_ajax_admin_dashboard_update_order', [$this, 'update_order']);
+		add_action('wp_ajax_theme_options_manager_update_field', [$this, 'update_field']);
+		add_action('wp_ajax_theme_options_manager_delete_field', [$this, 'delete_field']);
+		add_action('wp_ajax_theme_options_manager_update_order', [$this, 'update_order']);
 	}
 
 	public function create_settings_page() {
@@ -23,7 +23,7 @@ class AdminDashboard {
 			__('Theme Options Manager', 'theme-options-manager'),
 			__('Theme Options Manager', 'theme-options-manager'),
 			'manage_options',
-			'admin-dashboard',
+			'theme-options-manager',
 			[$this, 'render_settings_page']
 		);
 	}
@@ -89,13 +89,13 @@ class AdminDashboard {
 	}
 
 	public function enqueue_scripts($hook) {
-		if ($hook !== 'settings_page_admin-dashboard') return;
+		if ($hook !== 'settings_page_theme-options-manager') return;
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('admin-dashboard-script', plugins_url('assets/admin-dashboard.js', __FILE__), ['jquery', 'jquery-ui-sortable'], null, true);
-		wp_enqueue_style('admin-dashboard-style', plugins_url('assets/admin-dashboard.css', __FILE__));
+		wp_enqueue_script('theme-options-manager-script', plugins_url('assets/theme-options-manager.js', __FILE__), ['jquery', 'jquery-ui-sortable'], null, true);
+		wp_enqueue_style('theme-options-manager-style', plugins_url('assets/theme-options-manager.css', __FILE__));
 		wp_enqueue_script('inputmask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js');
-		wp_localize_script('admin-dashboard-script', 'adminDashboard', ['ajaxUrl' => admin_url('admin-ajax.php')]);
+		wp_localize_script('theme-options-manager-script', 'themeOptionsManager', ['ajaxUrl' => admin_url('admin-ajax.php')]);
 	}
 
 	public function update_field() {
@@ -154,4 +154,4 @@ class AdminDashboard {
 	}
 }
 
-new AdminDashboard();
+new ThemeOptionsManager();

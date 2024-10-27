@@ -84,8 +84,8 @@ jQuery(document).ready(function ($) {
             return;
         }
 
-        const fields = { action: 'admin_dashboard_update_field', name, value, type };
-        $.post(adminDashboard.ajaxUrl, fields).done(function () {
+        const fields = { action: 'theme_options_manager_update_field', name, value, type };
+        $.post(themeOptionsManager.ajaxUrl, fields).done(function () {
             location.reload();
         }).fail(function () {
             showAlert("Error adding field.");
@@ -124,8 +124,8 @@ jQuery(document).ready(function ($) {
             return;
         }
 
-        $.post(adminDashboard.ajaxUrl, {
-            action: 'admin_dashboard_update_field', index, name, value, type
+        $.post(themeOptionsManager.ajaxUrl, {
+            action: 'theme_options_manager_update_field', index, name, value, type
         }).done(function () {
             location.reload();
         }).fail(function () {
@@ -137,7 +137,7 @@ jQuery(document).ready(function ($) {
     $('.delete-field').on('click', function (e) {
         e.preventDefault();
         const index = $(this).data('index');
-        $.post(adminDashboard.ajaxUrl, { action: 'admin_dashboard_delete_field', index })
+        $.post(themeOptionsManager.ajaxUrl, { action: 'theme_options_manager_delete_field', index })
             .done(function () {
                 location.reload();
             })
@@ -151,7 +151,7 @@ jQuery(document).ready(function ($) {
         handle: '.handle',
         update: function () {
             const newOrder = $(this).sortable('toArray', { attribute: 'data-index' });
-            $.post(adminDashboard.ajaxUrl, { action: 'admin_dashboard_update_order', order: newOrder })
+            $.post(themeOptionsManager.ajaxUrl, { action: 'theme_options_manager_update_order', order: newOrder })
                 .done(function () {
                     location.reload();
                 })
