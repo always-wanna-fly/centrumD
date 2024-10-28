@@ -5,6 +5,7 @@
  * Version: 1.1
  * Text Domain: theme-options-manager
  */
+namespace Plugin\Theme_Options_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -15,6 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Handles the settings page for managing custom theme options.
  */
 class Theme_Options_Manager {
+
+	/**
+	 * Theme_Options_Manager constructor.
+	 */
+	const TEXT_DOMAIN = 'theme-options-manager';
 
 	/**
 	 * Option name for storing fields.
@@ -32,7 +38,7 @@ class Theme_Options_Manager {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_ajax_theme_options_manager_update_field', array( $this, 'update_field' ) );
 		add_action( 'wp_ajax_theme_options_manager_delete_field', array( $this, 'delete_field' ) );
-		add_action( 'wp_ajax_theme_options_manager_update_order', array( $this, 'update_order' ) );
+		add_action( 'wp_ajax_theme_options_manager_update_field_order', array( $this, 'update_field_order' ) );
 	}
 
 	/**
@@ -40,8 +46,8 @@ class Theme_Options_Manager {
 	 */
 	public function create_settings_page() {
 		add_options_page(
-			__( 'Theme Options Manager', 'theme-options-manager' ),
-			__( 'Theme Options Manager', 'theme-options-manager' ),
+			__( 'Theme Options Manager', self::TEXT_DOMAIN ),
+			__( 'Theme Options Manager', self::TEXT_DOMAIN ),
 			'manage_options',
 			'theme-options-manager',
 			array( $this, 'render_settings_page' )
@@ -81,7 +87,7 @@ class Theme_Options_Manager {
 	 */
 	public function update_field() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'Insufficient permissions', 'theme-options-manager' ) );
+			wp_die( __( 'Insufficient permissions', self::TEXT_DOMAIN ) );
 		}
 
 		$fields = get_option( $this->option_name, array() );
@@ -109,7 +115,7 @@ class Theme_Options_Manager {
 	 */
 	public function delete_field() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'Insufficient permissions', 'theme-options-manager' ) );
+			wp_die( __( 'Insufficient permissions', self::TEXT_DOMAIN ) );
 		}
 
 		$fields = get_option( $this->option_name, array() );
@@ -127,9 +133,9 @@ class Theme_Options_Manager {
 	/**
 	 * Updates the order of fields via AJAX.
 	 */
-	public function update_order() {
+	public function update_field_order() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'Insufficient permissions', 'theme-options-manager' ) );
+			wp_die( __( 'Insufficient permissions', self::TEXT_DOMAIN ) );
 		}
 
 		$order  = isset( $_POST['order'] ) ? $_POST['order'] : [];

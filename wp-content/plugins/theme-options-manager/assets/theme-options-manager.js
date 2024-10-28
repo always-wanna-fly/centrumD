@@ -151,7 +151,7 @@ jQuery(document).ready(function ($) {
         handle: '.handle',
         update: function () {
             const newOrder = $(this).sortable('toArray', {attribute: 'data-index'});
-            $.post(themeOptionsManager.ajaxUrl, {action: 'theme_options_manager_update_order', order: newOrder})
+            $.post(themeOptionsManager.ajaxUrl, {action: 'theme_options_manager_update_field_order', order: newOrder})
                 .done(function () {
                     location.reload();
                 })
