@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Theme_Options_Manager {
 
 	/**
-	 * Theme_Options_Manager constructor.
+	 *  Plugin domain
 	 */
 	const TEXT_DOMAIN = 'theme-options-manager';
 
