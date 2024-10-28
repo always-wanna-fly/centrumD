@@ -2,7 +2,7 @@
 use Plugin\Theme_Options_Manager\Theme_Options_Manager;
 ?>
 <div class="wrap">
-	<h1><?php _e( 'Theme Options Manager Settings', 'theme-options-manager' ); ?></h1>
+	<h1><?php _e( 'Theme Options Manager - Settings', 'theme-options-manager' ); ?></h1>
 	<table class="wp-list-table widefat fixed striped" id="fields-table">
 		<thead>
 		<tr>

@@ -68,9 +68,7 @@ class Theme_Options_Manager {
 	 * @param string $hook The current admin page hook.
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( $hook !== 'settings_page_theme-options-manager' ) {
-			return;
-		}
+		if ( $hook !== 'settings_page_theme-options-manager' ) { return; }
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'theme-options-manager-script', plugins_url( 'assets/theme-options-manager.js', __FILE__ ), array(
